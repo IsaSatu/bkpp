@@ -1,36 +1,57 @@
 #!/bin/bash
-function arqConfig {
+VERDE="\033[32;1m"
+
+function instalar {
+
+	echo "Removendo duplicatas"
+	rm -rf bkpp
+	rm -f configuracao.txt
+	echo "criando pastas"
 	mkdir bkpp
-	echo "digite o IP da máquina de bkp: (Ex: caso não lembrar ..hostename -I) "
+	touch configuracao.txt
+	sleep 5
+	echo "instalação concluida com sucessor"
+}
+function confgarq {
+	
+clear && echo -e "${VERDE}digite o IP da máquina de bkp: (Ex: caso não lembrar ..hostename -I)\n " && tput sgr0
 	read ip
 	echo "IP de exibição: $ip"
 
 	echo "nome da maquina de bkp: (ex:isasatu)"
 	read nome
 	echo "nome da maquina: $nome"
-	
-	echo " /home/diretorio da maquina de bkp:"
-	read maquina
-	echo "o arq virá de $maquina"
-
-	echo "Nome da maquina que irá receber o bkp: (Ex:/home/isasatu)"
-	read receberbkp
-	echo "Receber bkp: $receberbkp"
 
 	echo " nome do arquivo que deseja fazer bkp:"
 	read arq
 	echo "arquivo de bkp: $arq"
+	 
+	echo "digite a senha: "
+	read -s senha
 									
 	echo "arquivos de configuração criados com sucesso! "
-	echo "$ $pasta $usuario1 $senha bkp$pastabkp"
+	echo "$ $ip $nome $arq $senha"
+
+
 	
-	scp -r $nome"@"$ip":"$maquina$arq $bkpp
+	scp  $nome@$ip:$arq $bkpp
 	data=$(date "+%d-%m-%y")				
 	fim=" $bkpp-$data_format.tar.gz"
-	#zip -r $fim.zip $pastabkp
-	#mv $fim.zip bkp
+
 }
 																		
 function sair {
 	exit 1
 }
+
+echo "digite a opção desejada:
+1 = remocao
+2 = arqconfg
+3= sair"
+
+read ok
+case $ok in 
+	"1") remocao;;
+	"2") confgarq ;;
+	"3") sair;;
+esac
