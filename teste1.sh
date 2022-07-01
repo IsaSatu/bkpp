@@ -26,15 +26,17 @@ clear && echo -e "${VERDE}digite o IP da máquina de bkp: (Ex: caso não lembrar
 	read arq
 	echo "arquivo de bkp: $arq"
 	 
-	echo "digite a senha: "
+	echo "digite a senha: " 
 	read -s senha
 									
 	echo "arquivos de configuração criados com sucesso! "
 	echo "$ $ip $nome $arq $senha"
-
+	bkpp=$ip$user
+	mkdir $bkpp
+	p=$(pwd)
 
 	
-	scp  $nome@$ip:$arq $bkpp
+	scp  $nome@$ip:$arq $p/$bkpp
 	data=$(date "+%d-%m-%y")				
 	fim=" $bkpp-$data_format.tar.gz"
 
